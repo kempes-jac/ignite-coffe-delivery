@@ -18,6 +18,7 @@ import { CartReducer } from '../reducers/Delivery/reducer'
 import {
   addItemToCartAction,
   removeItemFromCartAction,
+  replaceItemInCartAction,
   setAddressAction,
   setPaymentAction,
 } from '../reducers/Delivery/actions'
@@ -182,11 +183,11 @@ export const PaymentTypes = [
   'cartão de crédito',
   'cartão de débito',
   'dinheiro',
-]
+] as const
 
-export type PaymentType = keyof typeof PaymentTypes
+export type PaymentType = typeof PaymentTypes[number]
 
-const DELIVERY_TAX = 3.5
+export const DELIVERY_TAX = 3.5
 
 export interface DeliveryItemsState {
   address: Address
@@ -195,6 +196,7 @@ export interface DeliveryItemsState {
   itemCount: number
   addItemToCart: (item: DeliveryItem) => void
   removeItemFromCart: (id: string) => void
+  replaceItemInCart: (item: DeliveryItem) => void
   setAddress: (address: Address) => void
   setPayment: (payment: PaymentType) => void
 }
@@ -225,6 +227,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     dispatch(addItemToCartAction(item))
   }
 
+  function replaceItemInCart(item: DeliveryItem): void {
+    dispatch(replaceItemInCartAction(item))
+  }
+
   function removeItemFromCart(id: string): void {
     dispatch(removeItemFromCartAction(id))
   }
@@ -247,6 +253,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         cart,
         itemCount: counter,
         addItemToCart: addItemToCartLocal,
+        replaceItemInCart,
         removeItemFromCart,
         setAddress,
         setPayment,

@@ -7,6 +7,7 @@ export interface InputIntNumberProps {
   minValue?: number
   maxValue?: number
   step?: number
+  height?: number
   changeValueHandler: (value: number) => void
 }
 
@@ -16,6 +17,7 @@ export function InputIntNumber({
   value = 1,
   step = 1,
   changeValueHandler,
+  height = 2.375,
 }: InputIntNumberProps) {
   const [currentValue, setValue] = useState<number>(value)
 
@@ -38,7 +40,7 @@ export function InputIntNumber({
   }
 
   return (
-    <InputNumberContainer>
+    <InputNumberContainer height={height}>
       <InteractiveButton onClick={handleMinusClick}>
         <Minus size={14} />
       </InteractiveButton>

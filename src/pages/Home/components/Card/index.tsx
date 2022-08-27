@@ -61,7 +61,7 @@ export function Card({
       <h4>{title}</h4>
       <p>{description}</p>
       <FormContainer>
-        <ValueContainer>{value}</ValueContainer>
+        <ValueContainer>{value.toFixed(2).replace('.', ',')}</ValueContainer>
         <InteractiveContainer>
           <InputIntNumber value={1} changeValueHandler={handleChangeAmount} />
           <FormButtonContainer onClick={handleAddItemToCart}>

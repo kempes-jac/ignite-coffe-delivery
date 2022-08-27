@@ -3,6 +3,7 @@ import { Address, DeliveryItem, PaymentType } from '../../contexts/CartContext'
 export enum CartActionsTypes {
   ADD_ITEM = 'ADD',
   REMOVE_ITEM = 'REMOVE',
+  REPLACE_ITEM = 'REPLACE',
   SET_ADDRESS = 'ADDRESS',
   SET_PAYMENT = 'PAYMENT',
 }
@@ -10,6 +11,15 @@ export enum CartActionsTypes {
 export function addItemToCartAction(item: DeliveryItem) {
   return {
     type: CartActionsTypes.ADD_ITEM,
+    payload: {
+      ...item,
+    },
+  }
+}
+
+export function replaceItemInCartAction(item: DeliveryItem) {
+  return {
+    type: CartActionsTypes.REPLACE_ITEM,
     payload: {
       ...item,
     },
@@ -36,7 +46,7 @@ export function setAddressAction(address: Address) {
 
 export function setPaymentAction(payment: PaymentType) {
   return {
-    type: CartActionsTypes.SET_ADDRESS,
+    type: CartActionsTypes.SET_PAYMENT,
     payload: {
       payment,
     },

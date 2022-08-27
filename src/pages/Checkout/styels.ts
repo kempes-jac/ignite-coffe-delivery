@@ -8,41 +8,29 @@ export const CheckoutMainContainer = styled.main`
 
 export const AdditionalDataContainer = styled.div`
   width: 40rem;
+
+  h3 {
+    font-family: 'Baloo 2';
+    font-size: 1.125rem;
+  }
 `
 
-export const AddressContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2.5rem;
-  gap: 2rem;
+export const BaseHeaderContainer = styled.div`
+  h4 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 1rem;
 
-  height: 23.25rem;
-  margin-bottom: 0.875rem;
+    height: 1.3125rem;
+    color: ${(props) => props.theme['base-subtitle']};
+  }
 
-  background: ${(props) => props.theme['base-card']};
-  border-radius: 0.375rem;
-`
-
-export const PaymentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2.5rem;
-  gap: 2rem;
-
-  height: 12.9375rem;
-
-  background: ${(props) => props.theme['base-card']};
-  border-radius: 0.375rem;
-`
-
-export const BillContainer = styled.div``
-
-export const BillDetailsContainer = styled.div`
-  border: 1px solid black;
-  height: 10rem;
-  width: 28rem;
-  background: ${(props) => props.theme['base-card']};
-  border-radius: 6px 44px;
+  p {
+    margin-left: 1.375rem;
+    font-size: 0.875rem;
+    color: ${(props) => props.theme['base-text']};
+  }
 `

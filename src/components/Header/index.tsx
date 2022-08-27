@@ -14,9 +14,12 @@ import {
 export function Header() {
   const { itemCount, address } = useContext(CartContext)
 
+  // console.log(address)
+
   const { cidade, uf } = address
 
-  const location = cidade !== '' && uf !== '' ? `${cidade}, ${uf}` : null
+  const location =
+    cidade && uf && cidade !== '' && uf !== '' ? `${cidade}, ${uf}` : null
   return (
     <HeaderContainer>
       <NavLink to="/">
@@ -29,6 +32,7 @@ export function Header() {
         {location ? (
           <NavLink className="city" to="" title="Home">
             <MapPin size={22} weight="fill" />
+            {location}
           </NavLink>
         ) : (
           <SpacerContainer />

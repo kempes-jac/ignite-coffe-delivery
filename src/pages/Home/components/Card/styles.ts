@@ -97,12 +97,14 @@ export const ValueContainer = styled.span`
   font-family: 'Baloo 2';
   font-weight: 800;
   font-size: 1.5rem;
+
   &::before {
     content: 'R$';
     font-family: 'Roboto';
     font-weight: 400;
     font-size: 0.875rem;
     text-align: right;
+    margin-right: 0.1rem;
     color: ${(props) => props.theme['base-text']};
   }
 `
