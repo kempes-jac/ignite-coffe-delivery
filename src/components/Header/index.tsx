@@ -12,10 +12,14 @@ import {
 } from './styles'
 
 export function Header() {
-  const { cart } = useContext(CartContext)
+  const { itemCount, address } = useContext(CartContext)
 
-  const items = cart.length
+  // console.log(address)
 
+  const { cidade, uf } = address
+
+  const location =
+    cidade && uf && cidade !== '' && uf !== '' ? `${cidade}, ${uf}` : null
   return (
     <HeaderContainer>
       <NavLink to="/">
@@ -25,17 +29,23 @@ export function Header() {
         />
       </NavLink>
       <nav>
-        <NavLink className="city" to="/" title="Home">
-          <MapPin size={22} weight="fill" /> Palmeira dos Índios
-        </NavLink>
+        {location ? (
+          <NavLink className="city" to="" title="Home">
+            <MapPin size={22} weight="fill" />
+            {location}
+          </NavLink>
+        ) : (
+          <SpacerContainer />
+        )}
+
         <CartContainer>
           <NavLink className="cart" to="/checkout" title="Checkout">
             <ShoppingCart size={22} weight="fill" />
           </NavLink>
-          {items === 0 ? (
+          {itemCount === 0 ? (
             <SpacerContainer />
           ) : (
-            <ItemsContainer>{items}</ItemsContainer>
+            <ItemsContainer>{itemCount}</ItemsContainer>
           )}
         </CartContainer>
       </nav>

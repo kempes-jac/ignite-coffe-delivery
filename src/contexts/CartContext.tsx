@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from 'react'
+import { createContext, ReactNode, useReducer } from 'react'
 
 import COFFEE_EXPRESSO from '../assets/products-images/expresso.png'
 import COFFEE_AMERICAN from '../assets/products-images/americano.png'
@@ -14,6 +14,14 @@ import COFFEE_CUBAN from '../assets/products-images/cubano.png'
 import COFFEE_HAWAIIAN from '../assets/products-images/havaiano.png'
 import COFFEE_ARABIAN from '../assets/products-images/arabe.png'
 import COFFEE_IRISH from '../assets/products-images/irlandes.png'
+import { CartReducer } from '../reducers/Delivery/reducer'
+import {
+  addItemToCartAction,
+  removeItemFromCartAction,
+  replaceItemInCartAction,
+  setAddressAction,
+  setPaymentAction,
+} from '../reducers/Delivery/actions'
 
 export const CoffeeTypes = [
   'TRADICIONAL',
@@ -172,19 +180,26 @@ export interface Address {
 }
 
 export const PaymentTypes = [
-  'cartão de crédito',
-  'cartão de débito',
-  'dinheiro',
-]
+  'Cartão de Crédito',
+  'Cartão de Débito',
+  'Dinheiro',
+] as const
 
-export type PaymentType = keyof typeof PaymentTypes
+export type PaymentType = typeof PaymentTypes[number]
 
-const DELIVERY_TAX = 3.5
+export const DELIVERY_TAX = 3.5
 
 export interface DeliveryItemsState {
   address: Address
   paymentType: PaymentType | null
   cart: DeliveryItem[]
+  itemCount: number
+  validCheckout: boolean
+  addItemToCart: (item: DeliveryItem) => void
+  removeItemFromCart: (id: string) => void
+  replaceItemInCart: (item: DeliveryItem) => void
+  setAddress: (address: Address) => void
+  setPayment: (payment: PaymentType) => void
 }
 
 export interface CartContextProviderProps {
@@ -194,20 +209,57 @@ export interface CartContextProviderProps {
 export const CartContext = createContext({} as DeliveryItemsState)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
+  const [cartState, dispatch] = useReducer(CartReducer, {
+    cart: [],
+    counter: 0,
+    address: {
+      cep: '',
+      rua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      uf: '',
+      cidade: '',
+    },
+    payment: null,
+    validCheckout: false,
+  })
+
+  function addItemToCartLocal(item: DeliveryItem): void {
+    dispatch(addItemToCartAction(item))
+  }
+
+  function replaceItemInCart(item: DeliveryItem): void {
+    dispatch(replaceItemInCartAction(item))
+  }
+
+  function removeItemFromCart(id: string): void {
+    dispatch(removeItemFromCartAction(id))
+  }
+
+  function setAddress(address: Address): void {
+    dispatch(setAddressAction(address))
+  }
+
+  function setPayment(payment: PaymentType): void {
+    dispatch(setPaymentAction(payment))
+  }
+
+  const { address, cart, counter, payment, validCheckout } = cartState
+
   return (
     <CartContext.Provider
       value={{
-        address: {
-          bairro: '',
-          cep: '',
-          cidade: '',
-          complemento: '',
-          numero: '',
-          rua: '',
-          uf: '',
-        },
-        paymentType: null,
-        cart: [],
+        address,
+        paymentType: payment,
+        cart,
+        itemCount: counter,
+        addItemToCart: addItemToCartLocal,
+        replaceItemInCart,
+        removeItemFromCart,
+        setAddress,
+        setPayment,
+        validCheckout,
       }}
     >
       {children}

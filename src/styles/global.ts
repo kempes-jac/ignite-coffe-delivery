@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 
-import backgroundImage from '../assets/background.png'
-
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
@@ -16,10 +14,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background: ${(props) => props.theme.background};
-    background-image: url(${backgroundImage});
-    background-repeat: no-repeat;
-    background-size: 100% 34rem;
-    background-position: center 104px;
+    
     
     -webkit-font-smoothing: antialiased;
 

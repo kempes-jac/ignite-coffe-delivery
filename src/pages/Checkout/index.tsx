@@ -1,19 +1,17 @@
-import {
-  AdditionalDataContainer,
-  AddressContainer,
-  BillContainer,
-  CheckoutMainContainer,
-  PaymentContainer,
-} from './styels'
+import { AddressComponent } from './components/Address'
+import { BillComponent } from './components/Bill'
+import { PaymentComponent } from './components/Payment'
+import { AdditionalDataContainer, CheckoutMainContainer } from './styels'
 
 export function Checkout() {
   return (
     <CheckoutMainContainer>
       <AdditionalDataContainer>
-        <AddressContainer></AddressContainer>
-        <PaymentContainer></PaymentContainer>
+        <h3>Complete seu pedido</h3>
+        <AddressComponent />
+        <PaymentComponent />
       </AdditionalDataContainer>
-      <BillContainer></BillContainer>
+      <BillComponent />
     </CheckoutMainContainer>
   )
 }

@@ -1,13 +1,17 @@
 import styled from 'styled-components'
 
-export const InputNumberContainer = styled.div`
+export interface InputNumberCOntainerProps {
+  height: number
+}
+
+export const InputNumberContainer = styled.div<InputNumberCOntainerProps>`
   display: flex;
 
   flex-direction: row;
   align-items: center;
 
   width: 4.5rem;
-  height: 2.375rem;
+  height: ${(props) => props.height}rem;
 
   background-color: ${(props) => props.theme['base-button']};
 

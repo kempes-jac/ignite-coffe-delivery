@@ -1,5 +1,7 @@
 import { ShoppingCart } from 'phosphor-react'
+import { useContext, useState } from 'react'
 import { InputIntNumber } from '../../../../components/InputN'
+import { CartContext, CoffeeType } from '../../../../contexts/CartContext'
 import {
   CardContainer,
   FormButtonContainer,
@@ -10,6 +12,7 @@ import {
 } from './styles'
 
 export interface CardProps {
+  id: string
   image: string
   tags: string[]
   title: string
@@ -17,7 +20,36 @@ export interface CardProps {
   value: number
 }
 
-export function Card({ image, tags, title, description, value }: CardProps) {
+export function Card({
+  id,
+  image,
+  tags,
+  title,
+  description,
+  value,
+}: CardProps) {
+  const { addItemToCart } = useContext(CartContext)
+
+  const [amount, setAmount] = useState<number>(1)
+
+  function handleChangeAmount(value: number): void {
+    setAmount(value)
+  }
+
+  function handleAddItemToCart() {
+    addItemToCart({
+      amount,
+      item: {
+        id,
+        image,
+        tags: tags as CoffeeType[],
+        title,
+        description,
+        value,
+      },
+    })
+  }
+
   return (
     <CardContainer>
       <img src={image} alt="" />
@@ -29,10 +61,10 @@ export function Card({ image, tags, title, description, value }: CardProps) {
       <h4>{title}</h4>
       <p>{description}</p>
       <FormContainer>
-        <ValueContainer>{value}</ValueContainer>
+        <ValueContainer>{value.toFixed(2).replace('.', ',')}</ValueContainer>
         <InteractiveContainer>
-          <InputIntNumber value={1} />
-          <FormButtonContainer>
+          <InputIntNumber value={1} changeValueHandler={handleChangeAmount} />
+          <FormButtonContainer onClick={handleAddItemToCart}>
             <ShoppingCart size={22} weight={'fill'} />
           </FormButtonContainer>
         </InteractiveContainer>

@@ -31,6 +31,7 @@ export function HomeBody() {
               title={product.title}
               value={product.value}
               description={product.description}
+              id={product.id}
             />
           )
         })}
