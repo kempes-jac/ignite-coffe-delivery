@@ -180,9 +180,9 @@ export interface Address {
 }
 
 export const PaymentTypes = [
-  'cartão de crédito',
-  'cartão de débito',
-  'dinheiro',
+  'Cartão de Crédito',
+  'Cartão de Débito',
+  'Dinheiro',
 ] as const
 
 export type PaymentType = typeof PaymentTypes[number]
@@ -194,6 +194,7 @@ export interface DeliveryItemsState {
   paymentType: PaymentType | null
   cart: DeliveryItem[]
   itemCount: number
+  validCheckout: boolean
   addItemToCart: (item: DeliveryItem) => void
   removeItemFromCart: (id: string) => void
   replaceItemInCart: (item: DeliveryItem) => void
@@ -221,6 +222,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       cidade: '',
     },
     payment: null,
+    validCheckout: false,
   })
 
   function addItemToCartLocal(item: DeliveryItem): void {
@@ -243,7 +245,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     dispatch(setPaymentAction(payment))
   }
 
-  const { address, cart, counter, payment } = cartState
+  const { address, cart, counter, payment, validCheckout } = cartState
 
   return (
     <CartContext.Provider
@@ -257,6 +259,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         removeItemFromCart,
         setAddress,
         setPayment,
+        validCheckout,
       }}
     >
       {children}

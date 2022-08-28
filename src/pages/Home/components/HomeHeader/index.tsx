@@ -1,11 +1,20 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 
-import { FeatureContainer, HomeHeaderContainer, TitleContainer } from './styles'
+import {
+  BackgroundContainer,
+  FeatureContainer,
+  HomeHeaderContainer,
+  TitleContainer,
+} from './styles'
 import logo from '../../../../assets/coffee-delivery.png'
+import backgroundImage from '../../../../assets/background.png'
 
 export function HomeHeader() {
   return (
     <HomeHeaderContainer>
+      <BackgroundContainer>
+        <img src={backgroundImage} alt="" />
+      </BackgroundContainer>
       <TitleContainer>
         <h1>Encontre o café perfeito para qualquer hora do dia</h1>
         <p>

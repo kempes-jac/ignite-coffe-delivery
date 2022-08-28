@@ -1,14 +1,15 @@
 import styled from 'styled-components'
 
 export const CheckoutMainContainer = styled.main`
+  border: 1px solid black;
   display: flex;
   flex-direction: row;
+  width: 72rem;
   gap: 2rem;
 `
 
 export const AdditionalDataContainer = styled.div`
-  width: 40rem;
-
+  width: 49rem;
   h3 {
     font-family: 'Baloo 2';
     font-size: 1.125rem;

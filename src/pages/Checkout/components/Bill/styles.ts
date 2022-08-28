@@ -11,8 +11,6 @@ export const BillContainer = styled.div`
 export const BillBodyContainer = styled.div``
 
 export const DetailsContainer = styled.div`
-  border: 1px solid black;
-
   padding: 2.5rem;
 
   /* height: 10rem; */
@@ -50,7 +48,7 @@ export const FooterTotalsLine = styled(FooterTextLine)`
 
 export const ValueContainer = styled.span`
   &::before {
-    content: 'R$';
+    content: 'R$ ';
   }
 `
 

@@ -9,6 +9,16 @@ export const HomeHeaderContainer = styled.div`
   height: 34rem;
 `
 
+export const BackgroundContainer = styled.div`
+  z-index: 1;
+  position: absolute;
+  width: 98vw;
+  left: 0vw;
+  img {
+    width: inherit;
+  }
+`
+
 export const TitleContainer = styled.div`
   width: 36.75rem;
 

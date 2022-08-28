@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { CartContext, DELIVERY_TAX } from '../../../../contexts/CartContext'
 import { CartItem } from './componets/CartItem'
 import {
@@ -13,8 +14,10 @@ import {
 } from './styles'
 
 export function BillComponent() {
-  const { cart, replaceItemInCart, removeItemFromCart } =
+  const { cart, replaceItemInCart, removeItemFromCart, validCheckout } =
     useContext(CartContext)
+
+  const navigate = useNavigate()
 
   const totalItems = cart.reduce((acc, cartItem) => {
     return acc + cartItem.amount * cartItem.item.value
@@ -23,6 +26,12 @@ export function BillComponent() {
   const deliveryTax = DELIVERY_TAX
 
   const total = deliveryTax + totalItems
+
+  function handleCheckout() {
+    if (validCheckout) {
+      navigate('/success')
+    }
+  }
   return (
     <BillContainer>
       <h3>Cafés selecionados</h3>
@@ -58,7 +67,9 @@ export function BillComponent() {
               {total.toFixed(2).replace('.', ',')}
             </ValueContainer>
           </FooterTotalsLine>
-          <CheckoutButton>CONFIRMAR PEDIDO</CheckoutButton>
+          <CheckoutButton onClick={handleCheckout}>
+            CONFIRMAR PEDIDO
+          </CheckoutButton>
         </FooterContainer>
       </DetailsContainer>
     </BillContainer>

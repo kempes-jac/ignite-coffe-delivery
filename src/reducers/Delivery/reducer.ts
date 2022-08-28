@@ -11,9 +11,27 @@ export interface CartState {
   counter: number
   address: Address
   payment: PaymentType | null
+  validCheckout: boolean
 }
 
 export function CartReducer(state: CartState, action: CartReducerDispatch) {
+  function validateCheckout(
+    payment: PaymentType | null,
+    address: Address,
+    counter: number,
+  ): boolean {
+    const { cidade, uf, rua, numero, bairro, cep } = address
+    return (
+      !!payment &&
+      counter > 0 &&
+      !!cidade &&
+      !!uf &&
+      !!rua &&
+      !!numero &&
+      !!bairro &&
+      !!cep
+    )
+  }
   switch (action.type) {
     case CartActionsTypes.ADD_ITEM: {
       const newCart = [...state.cart]
@@ -31,10 +49,17 @@ export function CartReducer(state: CartState, action: CartReducerDispatch) {
       const counter =
         newCart.reduce((acc, cartItem) => acc + cartItem.amount, 0) ?? 0
 
+      const validCheckout = validateCheckout(
+        state.payment,
+        state.address,
+        counter,
+      )
+
       return {
         ...state,
         cart: newCart,
         counter,
+        validCheckout,
       }
     }
     case CartActionsTypes.REPLACE_ITEM: {
@@ -49,26 +74,38 @@ export function CartReducer(state: CartState, action: CartReducerDispatch) {
       const counter =
         newCart.reduce((acc, cartItem) => acc + cartItem.amount, 0) ?? 0
 
+      const validCheckout = validateCheckout(
+        state.payment,
+        state.address,
+        counter,
+      )
+
       return {
         ...state,
         cart: newCart,
         counter,
+        validCheckout,
       }
     }
     case CartActionsTypes.REMOVE_ITEM: {
       const newCart = state.cart.filter(
-        (cartItem) => cartItem.item.id !== action.payload,
+        (cartItem) => cartItem.item.id !== action.payload.id,
       )
 
       const counter =
         newCart.reduce((acc, cartItem) => acc + cartItem.amount, 0) ?? 0
 
-      console.log(newCart, counter, action.payload)
+      const validCheckout = validateCheckout(
+        state.payment,
+        state.address,
+        counter,
+      )
 
       return {
         ...state,
         cart: newCart,
         counter,
+        validCheckout,
       }
     }
     case CartActionsTypes.SET_ADDRESS: {
@@ -77,6 +114,14 @@ export function CartReducer(state: CartState, action: CartReducerDispatch) {
         address: action.payload.address,
       }
 
+      const validCheckout = validateCheckout(
+        state.payment,
+        newState.address,
+        state.counter,
+      )
+
+      newState.validCheckout = validCheckout
+
       return newState
     }
     case CartActionsTypes.SET_PAYMENT: {
@@ -84,6 +129,14 @@ export function CartReducer(state: CartState, action: CartReducerDispatch) {
         ...state,
         payment: action.payload.payment,
       }
+
+      const validCheckout = validateCheckout(
+        newState.payment,
+        state.address,
+        state.counter,
+      )
+
+      newState.validCheckout = validCheckout
 
       return newState
     }

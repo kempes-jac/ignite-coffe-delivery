@@ -27,7 +27,7 @@ export const AddressBodyContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  width: 100%;
+  width: 101%;
   gap: 0.75rem;
   padding: 0;
 `
